@@ -108,7 +108,7 @@ inputs_norm =  mapstd('apply',inputs',ps)';
 fprintf('Training Process\n');
 
 top = 2; % number of neurons in hidden layer
-train_fnc = 'trainbfg'; % weights update function
+train_fnc = 'traingd'; % weights update function
 perf_fnc = 'mse'; % error function
 act_fnc = {'tansig'}; % activation function
 n_epochs = 100;
@@ -123,7 +123,9 @@ fprintf('Result Analysis\n');
 
 % train analysis
 plotperform(train_description);
-fig2pdf(gcf,'training_description.pdf'); close(gcf);
+fig2pdf(gcf,'training_description.pdf');
+set(gcf,'PaperOrientation','landscape');
+saveas(gcf,'training_description.png'); close(gcf);
 
 % separating 2 different class
 c1 = nn_output((ival(find(targets(ival)==1)))); % validation set
@@ -137,16 +139,24 @@ max_value = max([(-1)*min(nn_output) max(nn_output)]);
 
 % checking histograms
 nn_hist_out(50,c1,c2,pt_SPmax);
-fig2pdf(gcf,'histogram_4_class.pdf'); close(gcf);
-
+fig2pdf(gcf,'histogram_4_class.pdf');
+set(gcf,'PaperOrientation','landscape');
+saveas(gcf,'histogram2class.png');
+close(gcf);
 
 % checking ROC
 plot_roc(c1,c2,max_value);
-fig2pdf(gcf,'roc.pdf'); close(gcf);
+fig2pdf(gcf,'roc.pdf');
+set(gcf,'PaperOrientation','landscape');
+saveas(gcf,'roc.png');
+close(gcf);
 
 % confusion matrix
 plotconfusion((1+targets(ival)')/2, nn_output(ival));
-fig2pdf(gcf,'confusion.pdf'); close(gcf);
+fig2pdf(gcf,'confusion.pdf'); 
+set(gcf,'PaperOrientation','landscape');
+saveas(gcf,'confusion.png');
+close(gcf);
 
 fprintf('Exporting Functions\n');
 rmpath(genpath('functions'));
