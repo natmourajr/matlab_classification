@@ -10,17 +10,42 @@
 % 4 - Training Process
 % 5 - Result Analysis
 % 
+% In machine learning and related fields, artificial neural networks (ANNs)
+% are computational models inspired by an animal's central nervous systems 
+% (in particular the brain), and are used to estimate or approximate functions 
+% that can depend on a large number of inputs and are generally unknown. 
+% Artificial neural networks are generally presented as systems of interconnected 
+% "neurons" which can compute values from inputs, and are capable of machine 
+% learning as well as pattern recognition thanks to their adaptive nature.
+% 
+% This example intent to create a basic tutorial to classify 2 different
+% class with MATLAB Neural Network Toolbox.
 
-close all;
-clear all;
-clc;
+close all; % close all figure windows
+clear all; % clear all variables
+clc; % reset command line
 
 fprintf('Starting %s.m\n',mfilename('fullpath'));
 fprintf('Importing Functions\n');
 addpath(genpath('functions'));
 
 % 1 - Data Aquisition
-load fisheriris;
+load fisheriris; % load iris data base
+
+% Iris Data base
+% 
+% 150 events (occurrences)
+% 50 setosa class, 50 versicolor class, 50 virginca class
+% meas (150x4):
+% Attributes:
+%  1. Sepal length in cm
+%  2. Sepal width in cm
+%  3. Petal length in cm
+%  4. Petal width in cm
+%
+% species (150x1 - cell vector)
+% string with class name
+
 
 str_targets = species;
 
@@ -56,7 +81,7 @@ tst_id =  CVO.test(1); % taking the first one
 val_id = tst_id; % test = validation -> small statistics
 
 
-% turn trn_id in integers
+% turn trn_id, tst_id in integers  to use in NN training process
 itrn = [];
 itst = [];
 ival = [];
@@ -82,7 +107,7 @@ inputs_norm =  mapstd('apply',inputs',ps)';
 % 4 - Training Process
 fprintf('Training Process\n');
 
-top = 10; % number of neurons in hidden layer
+top = 2; % number of neurons in hidden layer
 train_fnc = 'trainbfg'; % weights update function
 perf_fnc = 'mse'; % error function
 act_fnc = {'tansig'}; % activation function
